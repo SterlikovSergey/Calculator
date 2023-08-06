@@ -23,6 +23,6 @@ public class RegistrationServlet extends HomeServlet{
         String userName = req.getParameter("userName");
         String password = req.getParameter("password");
         userService.create(name,userName,password);
-        req.getServletContext().getRequestDispatcher("/").forward(req,resp);
+        resp.sendRedirect("/");
     }
 }
