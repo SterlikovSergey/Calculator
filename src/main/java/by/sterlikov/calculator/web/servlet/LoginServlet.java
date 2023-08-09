@@ -15,30 +15,31 @@ import java.util.Optional;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    private final UserService userService = new UserService();
+    private final UserService userService = UserService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getServletContext().getRequestDispatcher("/pages/login.jsp").forward(req,resp);
+        req.getServletContext().getRequestDispatcher("/pages/login.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userName = req.getParameter("name");
         String password = req.getParameter("password");
-            Optional<User> byUserName = userService.getByUserName(userName);
-            if (byUserName.isPresent()) {
-                User user = byUserName.get();
-                System.out.println(user.getName());
-                if (user.getPassword().equals(password)) {
-                    req.getSession().setAttribute("currentUser", user);
-                    resp.sendRedirect("/");
-                    return;
-                } else {
-                    req.getServletContext().setAttribute("message", "Incorrect password");
-                }
+        Optional<User> byUserName = userService.getByUserName(userName);
+        if (byUserName.isPresent()) {
+            User user = byUserName.get();
+            System.out.println(user.getName());
+            if (user.getPassword().equals(password)) {
+                req.getSession().setAttribute("currentUser", user);
+                resp.sendRedirect("/");
+                return;
             } else {
-                req.setAttribute("message", "User not found");
+                req.getServletContext().setAttribute("message", "Incorrect password");
             }
-            req.getServletContext().getRequestDispatcher("/pages/login.jsp").forward(req,resp);
+        } else {
+            req.setAttribute("message", "User not found");
+        }
+        req.getServletContext().getRequestDispatcher("/pages/login.jsp").forward(req, resp);
     }
 }

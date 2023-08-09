@@ -13,10 +13,11 @@ import java.util.Optional;
 
 @WebServlet("/calculator")
 public class OperationServlet extends HttpServlet {
-    private final OperationService operationService = new OperationService();
+    private final OperationService operationService = OperationService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getServletContext().getRequestDispatcher("/pages/calculator.jsp").forward(req,resp);
+        req.getServletContext().getRequestDispatcher("/pages/calculator.jsp").forward(req, resp);
     }
 
     @Override
@@ -26,12 +27,12 @@ public class OperationServlet extends HttpServlet {
         String type = req.getParameter("type");
 
         Optional<Operation> calculate = operationService.calculate(num1, num2, type);
-        if(calculate.isPresent()){
+        if (calculate.isPresent()) {
             Operation operation = calculate.get();
-            req.setAttribute("rez",operation);
+            req.setAttribute("rez", operation);
         } else {
-            req.setAttribute("message","Type not found!");
+            req.setAttribute("message", "Type not found!");
         }
-        req.getServletContext().getRequestDispatcher("/pages/calculator.jsp").forward(req,resp);
+        req.getServletContext().getRequestDispatcher("/pages/calculator.jsp").forward(req, resp);
     }
 }

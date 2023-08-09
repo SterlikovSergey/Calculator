@@ -6,6 +6,16 @@ import java.sql.*;
 import java.util.Optional;
 
 public class JdbcUserStorage implements UserStorage{
+
+    private static JdbcUserStorage instance;
+    private JdbcUserStorage(){}
+
+    public static JdbcUserStorage getInstance(){
+        if(instance == null){
+            instance = getInstance();
+        }
+        return instance;
+    }
     @Override
     public void save(User user){
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_calculator",

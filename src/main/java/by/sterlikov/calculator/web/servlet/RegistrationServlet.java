@@ -1,5 +1,6 @@
 package by.sterlikov.calculator.web.servlet;
 
+import by.sterlikov.calculator.entity.User;
 import by.sterlikov.calculator.service.UserService;
 
 import javax.servlet.ServletException;
@@ -11,11 +12,11 @@ import java.io.IOException;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
-    private final UserService userService = new UserService();
+    private final UserService userService = UserService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getServletContext().getRequestDispatcher("/pages/registration.jsp").forward(req,resp);
+        req.getServletContext().getRequestDispatcher("/pages/registration.jsp").forward(req, resp);
     }
 
     @Override
@@ -23,7 +24,8 @@ public class RegistrationServlet extends HttpServlet {
         String name = req.getParameter("name");
         String userName = req.getParameter("userName");
         String password = req.getParameter("password");
-        userService.create(name,userName,password);
+        User user = new User(name,userName,password);
+        userService.create(user);
         resp.sendRedirect("/");
     }
 }

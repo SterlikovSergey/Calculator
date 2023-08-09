@@ -12,6 +12,6 @@ public class ApplicationListener implements ServletContextListener {
     @SneakyThrows
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
     }
 }

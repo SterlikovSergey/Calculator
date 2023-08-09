@@ -5,6 +5,14 @@ import by.sterlikov.calculator.entity.Operation;
 import java.util.Optional;
 
 public class OperationService {
+    private static OperationService instance;
+    private OperationService(){}
+    public static OperationService getInstance(){
+        if(instance == null){
+            instance = getInstance();
+        }
+        return new OperationService();
+    }
     public Optional<Operation> calculate(double num1, double num2, String type) {
         switch (type) {
             case "sum" -> {
