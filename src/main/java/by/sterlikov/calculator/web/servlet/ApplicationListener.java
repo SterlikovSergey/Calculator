@@ -1,15 +1,17 @@
 package by.sterlikov.calculator.web.servlet;
 
+import lombok.SneakyThrows;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+
+@WebListener
 
 public class ApplicationListener implements ServletContextListener {
+    @SneakyThrows
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

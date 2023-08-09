@@ -11,7 +11,7 @@
     <title>Registration</title>
 </head>
 <body>
-<form name="/registration" method="post">
+<form name="registration" method="post">
     <label>
         <input name="name" type="text" placeholder="insert name">
     </label>

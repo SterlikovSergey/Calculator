@@ -11,17 +11,17 @@ public class InMemoryUserStorage implements UserStorage {
     private final List<User> users = new ArrayList<>();
 
     @Override
-    public void save(User user) {
-        users.add(user);
+    public void save(User user) throws ClassNotFoundException {
+/*        users.add(user);*/
     }
 
     @Override
     public Optional<User> findByUserName(String userName) {
-        for (User user : users) {
+/*        for (User user : users) {
             if (user.getName().equals(userName)) {
                 return Optional.of(user);
             }
-        }
+        }*/
             return Optional.empty();
     }
 }

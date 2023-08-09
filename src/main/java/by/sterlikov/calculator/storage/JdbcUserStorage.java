@@ -2,13 +2,12 @@ package by.sterlikov.calculator.storage;
 
 import by.sterlikov.calculator.entity.User;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.Optional;
 
 public class JdbcUserStorage implements UserStorage{
     @Override
-    public void save(User user) {
+    public void save(User user){
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_calculator",
                 "root", "root")){
             String query = "INSERT INTO User(name,user_name,password) VALUE (?,?,?)";
@@ -24,20 +23,23 @@ public class JdbcUserStorage implements UserStorage{
 
     @Override
     public Optional<User> findByUserName(String userName) {
+        String query = "SELECT * FROM User WHERE user_name = ?";
         try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_calculator",
                 "root","root")){
-            String query = "SELECT * FROM USER WHERE user_name = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,userName);
-            User user = new User();
             ResultSet resultSet = preparedStatement.executeQuery();
+            User user = new User();
             while (resultSet.next()){
-                String name = resultSet.getString("name");
-                String userNameX = resultSet.getString("user_name");
-                String passsword = resultSet.getString("password");
+                String name;
+                String userNameX;
+                String password;
+                name = resultSet.getString("name");
+                userNameX = resultSet.getString("user_name");
+                password = resultSet.getString("password");
                 user.setName(name);
                 user.setUserName(userNameX);
-                user.setPassword(passsword);
+                user.setPassword(password);
             }
             return Optional.of(user);
         } catch (SQLException e){
