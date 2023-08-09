@@ -18,9 +18,8 @@ public class JdbcUserStorage implements UserStorage{
     }
     @Override
     public void save(User user){
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_calculator",
-                "root", "root")){
-            String query = "INSERT INTO User(name,user_name,password) VALUE (?,?,?)";
+        String query = "INSERT INTO User(name,user_name,password) VALUE (?,?,?)";
+        try (Connection connection = MySqlConnection.getConnection()){
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getUserName());
@@ -34,8 +33,7 @@ public class JdbcUserStorage implements UserStorage{
     @Override
     public Optional<User> findByUserName(String userName) {
         String query = "SELECT * FROM User WHERE user_name = ?";
-        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_calculator",
-                "root","root")){
+        try(Connection connection = MySqlConnection.getConnection()){
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,userName);
             ResultSet resultSet = preparedStatement.executeQuery();
