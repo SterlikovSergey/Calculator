@@ -1,4 +1,4 @@
-package by.sterlikov.calculator.web.servlet;
+package by.sterlikov.calculator.web.filter;
 
 import lombok.SneakyThrows;
 

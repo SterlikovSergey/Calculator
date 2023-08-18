@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 
-@WebServlet("/login")
+@WebServlet(value = "/login", name = "LoginServlet")
 public class LoginServlet extends HttpServlet {
 
     private final UserService userService = UserService.getInstance();
@@ -24,18 +24,18 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userName = req.getParameter("name");
+        String userName = req.getParameter("userName");
         String password = req.getParameter("password");
-        Optional<User> byUserName = userService.getByUserName(userName);
-        if (byUserName.isPresent()) {
-            User user = byUserName.get();
+        Optional<User> existsUser = userService.getByUserName(userName);
+        if (existsUser.isPresent()) {
+            User user = existsUser.get();
             System.out.println(user.getName());
             if (user.getPassword().equals(password)) {
                 req.getSession().setAttribute("currentUser", user);
                 resp.sendRedirect("/");
                 return;
             } else {
-                req.getServletContext().setAttribute("message", "Incorrect password");
+                req.setAttribute("message", "Incorrect password");
             }
         } else {
             req.setAttribute("message", "User not found");

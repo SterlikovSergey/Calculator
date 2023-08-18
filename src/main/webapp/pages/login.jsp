@@ -12,9 +12,7 @@
     <title>Login</title>
 </head>
 <body>
-<c:if test="currentUser" var="user">
 
-</c:if>
 <form action="login" method="post">
     <label>
     <input name="userName" type="text" placeholder="userName">
@@ -25,7 +23,12 @@
     <label>
         <button type="submit">Accept</button>
     </label>
-</form>
 
+
+</form>
+<h1>${message}</h1>
+<c:if test="${message != null}">
+    <a href="registration">Registration</a>
+</c:if>
 </body>
 </html>

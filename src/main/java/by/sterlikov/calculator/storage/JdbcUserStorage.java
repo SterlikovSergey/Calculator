@@ -12,13 +12,13 @@ public class JdbcUserStorage implements UserStorage{
 
     public static JdbcUserStorage getInstance(){
         if(instance == null){
-            instance = getInstance();
+            instance = new JdbcUserStorage();
         }
         return instance;
     }
     @Override
     public void save(User user){
-        String query = "INSERT INTO User(name,user_name,password) VALUE (?,?,?)";
+        String query = "INSERT INTO User(name,user_name,password) VALUES (?,?,?)";
         try (Connection connection = MySqlConnection.getConnection()){
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getName());
@@ -39,17 +39,24 @@ public class JdbcUserStorage implements UserStorage{
             ResultSet resultSet = preparedStatement.executeQuery();
             User user = new User();
             while (resultSet.next()){
+                int id;
                 String name;
                 String userNameX;
                 String password;
+                id = resultSet.getInt("id");
                 name = resultSet.getString("name");
                 userNameX = resultSet.getString("user_name");
                 password = resultSet.getString("password");
+                user.setId(id);
                 user.setName(name);
                 user.setUserName(userNameX);
                 user.setPassword(password);
             }
-            return Optional.of(user);
+            if (user.getUserName() != null) {
+                return Optional.of(user);
+            } else {
+                return Optional.empty();
+            }
         } catch (SQLException e){
             throw new RuntimeException(e);
         }

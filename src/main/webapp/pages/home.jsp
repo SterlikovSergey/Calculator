@@ -14,11 +14,13 @@
 <body>
 
 <c:if test="${sessionScope.currentUser != null}">
+    <h3>Hello ${sessionScope.currentUser.userName}</h3>
     <a href="calculator">Calculator</a>
     <a href="logout">Logout</a>
 </c:if>
 
 <c:if test="${sessionScope.currentUser == null}">
+    <h3>Hello guest</h3>
     <a href="registration">Registration</a>
     <a href="login">Login</a>
 </c:if>

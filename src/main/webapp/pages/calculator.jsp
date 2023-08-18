@@ -12,12 +12,14 @@
 </head>
 <body>
 <form action="calculator" method="post">
+    <h3>Hello ${sessionScope.currentUser.userName}, enter an arithmetic expression</h3>
+    <input type="text" name="values" placeholder="your values">
     <input type="number" name="num1" placeholder="Number 1">
     <input type="number" name="num2" placeholder="Number 2">
-    <input type="text" name="type" placeholder="Type">
+    <input type="text" name="type" placeholder="sum,sub,cos,sin">
     <button>Access</button>
 </form>
-<h3>${rez}</h3>
+<h3>${result}</h3>
 <h3>${message}</h3>
 </body>
 </html>
