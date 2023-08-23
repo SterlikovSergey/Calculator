@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -35,7 +38,13 @@ public class RegistrationServlet extends HttpServlet {
             }
         } else {
             userService.create(user);
+            List<User> users = userService.getAllUsers();
+
             req.getSession().setAttribute("currentUser", user);
+            req.getSession().setAttribute("allUsers",users.stream().distinct().collect(Collectors.toList()));
+            for (User user1:users){
+                System.out.println(user1);
+            }
             resp.sendRedirect("/");
         }
 

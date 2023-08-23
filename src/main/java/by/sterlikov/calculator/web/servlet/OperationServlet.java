@@ -35,9 +35,9 @@ public class OperationServlet extends HttpServlet {
         Operation calculate = operationService.calculate(operation);
         double result = calculate.result();
         User user = (User) req.getSession().getAttribute("currentUser");
-        System.out.println(split[0] + split[1] + type + result + user.getId());
+        System.out.println("sout operation servlet: " + split[0] + split[1] + type + result + user.getId());
 
-        jdbcOperationStorage.save(split,type,result,user);
+        jdbcOperationStorage.save(user,split,type,result);
         req.setAttribute("result", result);
         req.getServletContext().getRequestDispatcher("/pages/calculator.jsp").forward(req,resp);
     }

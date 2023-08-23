@@ -3,6 +3,8 @@ package by.sterlikov.calculator.storage;
 import by.sterlikov.calculator.entity.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class JdbcUserStorage implements UserStorage{
@@ -60,5 +62,25 @@ public class JdbcUserStorage implements UserStorage{
         } catch (SQLException e){
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<User> findAllUser() {
+        String query = "SELECT * FROM User";
+        try(Connection connection = MySqlConnection.getConnection()){
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            List<User> users = new ArrayList<>();
+            while (resultSet.next()){
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
+                String userName = resultSet.getString(3);
+                users.add(new User(id,name,userName));
+            }
+            return users;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

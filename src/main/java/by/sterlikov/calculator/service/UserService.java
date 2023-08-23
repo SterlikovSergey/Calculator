@@ -3,6 +3,7 @@ package by.sterlikov.calculator.service;
 import by.sterlikov.calculator.entity.User;
 import by.sterlikov.calculator.storage.JdbcUserStorage;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserService {
@@ -27,4 +28,5 @@ public class UserService {
     public Optional<User> getByUserName(String userName) {
         return jdbcUserStorage.findByUserName(userName);
     }
+    public List<User> getAllUsers(){return jdbcUserStorage.findAllUser();}
 }

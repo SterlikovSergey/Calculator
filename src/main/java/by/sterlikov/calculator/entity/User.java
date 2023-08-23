@@ -20,6 +20,12 @@ public class User {
         this.password = password;
     }
 
+    public User(int id, String name, String userName) {
+        this.id = id;
+        this.name = name;
+        this.userName = userName;
+    }
+
     @Override
     public String toString() {
         return "User{" +

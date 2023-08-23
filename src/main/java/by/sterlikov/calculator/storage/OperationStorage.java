@@ -5,5 +5,5 @@ import by.sterlikov.calculator.entity.User;
 
 public interface OperationStorage {
 
-    void save(String[] values, String type, Double result, User user) throws ClassNotFoundException;
+    void save(User user,String[] values, String type, Double result) throws ClassNotFoundException;
 }
