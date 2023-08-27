@@ -15,7 +15,14 @@ public class OperationService {
         return instance;
     }
     public Operation calculate(Operation operation) {
-        System.out.println(operation.toString());
+
+        System.out.println(" sout operationService" + operation.toString());
+
+        Operation execute = operation.execute();
+        jdbcOperationStorage.save(execute);
+
+
+
         return operation.execute();
 
     }

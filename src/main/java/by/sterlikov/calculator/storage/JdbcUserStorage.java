@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class JdbcUserStorage implements UserStorage{
+    private static final String INSERT_QUERY = "INSERT INTO User(name,user_name,password) VALUES (?,?,?)";
+    private static final String SELECT_USERNAME_QUERY = "SELECT * FROM User WHERE user_name = ?";
+    private static final String SELECT_ALL_QUERY = "SELECT * FROM User";
 
     private static JdbcUserStorage instance;
     private JdbcUserStorage(){}
@@ -20,9 +23,8 @@ public class JdbcUserStorage implements UserStorage{
     }
     @Override
     public void save(User user){
-        String query = "INSERT INTO User(name,user_name,password) VALUES (?,?,?)";
         try (Connection connection = MySqlConnection.getConnection()){
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getUserName());
             preparedStatement.setString(3, user.getPassword());
@@ -34,9 +36,8 @@ public class JdbcUserStorage implements UserStorage{
 
     @Override
     public Optional<User> findByUserName(String userName) {
-        String query = "SELECT * FROM User WHERE user_name = ?";
         try(Connection connection = MySqlConnection.getConnection()){
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USERNAME_QUERY);
             preparedStatement.setString(1,userName);
             ResultSet resultSet = preparedStatement.executeQuery();
             User user = new User();
@@ -66,10 +67,9 @@ public class JdbcUserStorage implements UserStorage{
 
     @Override
     public List<User> findAllUser() {
-        String query = "SELECT * FROM User";
         try(Connection connection = MySqlConnection.getConnection()){
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(SELECT_ALL_QUERY);
             List<User> users = new ArrayList<>();
             while (resultSet.next()){
                 int id = resultSet.getInt(1);
@@ -81,6 +81,5 @@ public class JdbcUserStorage implements UserStorage{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

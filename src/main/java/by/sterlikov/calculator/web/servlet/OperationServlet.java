@@ -18,7 +18,6 @@ import java.util.*;
 public class OperationServlet extends HttpServlet {
     private final OperationService operationService = OperationService.getInstance();
     private final OperationFactory operationFactory = OperationFactory.getInstance();
-    private final JdbcOperationStorage jdbcOperationStorage = JdbcOperationStorage.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,13 +30,11 @@ public class OperationServlet extends HttpServlet {
         String values = req.getParameter("values"); // 2,3 sum
         String[] split = values.split(",");
         String type = req.getParameter("type").toUpperCase();// sum
-        Operation operation = operationFactory.getOperation(split, Operation.Type.valueOf(type));
+        User user = (User) req.getSession().getAttribute("currentUser");
+        Operation operation = operationFactory.getOperation(split, Operation.Type.valueOf(type),user);
         Operation calculate = operationService.calculate(operation);
         double result = calculate.result();
-        User user = (User) req.getSession().getAttribute("currentUser");
-        System.out.println("sout operation servlet: " + split[0] + split[1] + type + result + user.getId());
 
-        jdbcOperationStorage.save(user,split,type,result);
         req.setAttribute("result", result);
         req.getServletContext().getRequestDispatcher("/pages/calculator.jsp").forward(req,resp);
     }
