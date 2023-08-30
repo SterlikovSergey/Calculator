@@ -2,24 +2,21 @@ package by.sterlikov.calculator.domain;
 
 import by.sterlikov.calculator.entity.User;
 
-public class SumOperation implements Operation {
-    private final Double num1;
+public class AbsOperation implements Operation{
+    private final Double num;
     private final String type;
-    private final Double num2;
     private Double result;
     private final User author;
 
-
-    public SumOperation(Double num1, Double num2, String type, User author) {
-        this.num1 = num1;
-        this.num2 = num2;
-        this.type = type;
+    public AbsOperation(Double num,String type,User author) {
+        this.num = num;
         this.author = author;
+        this.type = type;
     }
 
     @Override
     public Operation execute() {
-        this.result = num1 + num2;
+        this.result = Math.abs(num);
         return this;
     }
 
@@ -35,6 +32,6 @@ public class SumOperation implements Operation {
 
     @Override
     public String getOperationValues() {
-        return num1 + " " + type + " " + num2 + " = ";
+        return type + "(" + num + ") = ";
     }
 }

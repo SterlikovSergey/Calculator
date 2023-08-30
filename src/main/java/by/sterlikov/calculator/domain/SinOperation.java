@@ -9,7 +9,7 @@ public class SinOperation implements Operation {
     private Double result;
     private final User author;
 
-    public SinOperation(Double num,String type,User author) {
+    public SinOperation(Double num, String type, User author) {
         this.num = num;
         this.author = author;
         this.type = type;
@@ -32,10 +32,7 @@ public class SinOperation implements Operation {
     }
 
     @Override
-    public String toString() {
-        return "SinOperation{" +
-                "num=" + num +
-                ", type='" + type + '\'' +
-                '}';
+    public String getOperationValues() {
+        return type + "(" + num + ") = ";
     }
 }

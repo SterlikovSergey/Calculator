@@ -6,7 +6,6 @@ public class CosOperation implements Operation {
     private final Double num;
     private final String type;
     private Double result;
-
     private final User author;
 
     public CosOperation(Double num,String type, User author) {
@@ -32,10 +31,7 @@ public class CosOperation implements Operation {
     }
 
     @Override
-    public String toString() {
-        return "CosOperation{" +
-                "num=" + num +
-                ", type='" + type + '\'' +
-                '}';
+    public String getOperationValues() {
+        return type + "(" + num + ") = ";
     }
 }

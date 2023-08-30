@@ -3,6 +3,7 @@ package by.sterlikov.calculator.domain;
 import by.sterlikov.calculator.entity.User;
 
 public interface Operation {
+    String getOperationValues();
 
     Operation execute();
 
@@ -10,8 +11,7 @@ public interface Operation {
 
     User author();
 
-
     enum Type {
-        SUM, SUB, COS, SIN
+        SUM, SUB, COS, SIN, EXP, ABS, FLOOR, SQRT
     }
 }

@@ -9,7 +9,7 @@ public class SubOperation implements Operation {
     private Double result;
     private final User author;
 
-    public SubOperation(Double num1, Double num2,String type, User author) {
+    public SubOperation(Double num1, Double num2, String type, User author) {
         this.num1 = num1;
         this.num2 = num2;
         this.type = type;
@@ -33,11 +33,7 @@ public class SubOperation implements Operation {
     }
 
     @Override
-    public String toString() {
-        return "SubOperation{" +
-                "num1=" + num1 +
-                ", type='" + type + '\'' +
-                ", num2=" + num2 +
-                '}';
+    public String getOperationValues() {
+        return num1 + " " + type + " " + num2 + " = ";
     }
 }

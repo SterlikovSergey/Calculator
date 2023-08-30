@@ -36,20 +36,17 @@ public class JdbcUserStorage implements UserStorage{
 
     @Override
     public Optional<User> findByUserName(String userName) {
+        User user = new User();
         try(Connection connection = MySqlConnection.getConnection()){
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USERNAME_QUERY);
             preparedStatement.setString(1,userName);
             ResultSet resultSet = preparedStatement.executeQuery();
-            User user = new User();
+
             while (resultSet.next()){
-                int id;
-                String name;
-                String userNameX;
-                String password;
-                id = resultSet.getInt("id");
-                name = resultSet.getString("name");
-                userNameX = resultSet.getString("user_name");
-                password = resultSet.getString("password");
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String userNameX = resultSet.getString("user_name");
+                String password = resultSet.getString("password");
                 user.setId(id);
                 user.setName(name);
                 user.setUserName(userNameX);
@@ -66,11 +63,11 @@ public class JdbcUserStorage implements UserStorage{
     }
 
     @Override
-    public List<User> findAllUser() {
+    public List<User> findAllUsers() {
+        List<User> users = new ArrayList<>();
         try(Connection connection = MySqlConnection.getConnection()){
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_ALL_QUERY);
-            List<User> users = new ArrayList<>();
             while (resultSet.next()){
                 int id = resultSet.getInt(1);
                 String name = resultSet.getString(2);

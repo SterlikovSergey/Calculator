@@ -2,15 +2,14 @@ package by.sterlikov.calculator.domain;
 
 import by.sterlikov.calculator.entity.User;
 
-public class SumOperation implements Operation {
+public class ExpOperation implements Operation{
     private final Double num1;
     private final String type;
     private final Double num2;
     private Double result;
     private final User author;
 
-
-    public SumOperation(Double num1, Double num2, String type, User author) {
+    public ExpOperation(Double num1, Double num2,String type, User author) {
         this.num1 = num1;
         this.num2 = num2;
         this.type = type;
@@ -19,7 +18,7 @@ public class SumOperation implements Operation {
 
     @Override
     public Operation execute() {
-        this.result = num1 + num2;
+        this.result = Math.pow(num1, num2);
         return this;
     }
 
