@@ -27,18 +27,13 @@ public class OperationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("currentUser", req.getSession().getAttribute("currentUser"));
-        User user = (User) req.getSession().getAttribute("currentUser");
         String values = req.getParameter("values"); // 2,3 sum
         String[] split = values.split(",");
         String type = req.getParameter("type").toUpperCase();// sum
-
-        Operation operation = operationFactory.getOperation(split, Operation.Type.valueOf(type),user);
+        Operation operation = operationFactory.getOperation(split, Operation.Type.valueOf(type),
+                (User) req.getSession().getAttribute("currentUser"));
         Operation calculate = operationService.calculate(operation);
-        double result = calculate.result();
-        List<OperationHistory> history = operationService.getAllOperationByUserName(user);
-        req.setAttribute("result", result);
-        req.getSession().setAttribute("operationHistory", history);
-        req.getServletContext().getRequestDispatcher("/pages/calculator.jsp").forward(req,resp);
+        req.setAttribute("result", calculate.result());
+        req.getServletContext().getRequestDispatcher("/pages/calculator.jsp").forward(req, resp);
     }
 }

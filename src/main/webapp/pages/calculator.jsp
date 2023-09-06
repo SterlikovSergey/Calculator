@@ -16,9 +16,10 @@
     <button>Access</button>
 </form>
 <h3>${result}</h3>
+<a href="history">Open history</a>
 <table>
-    <c:forEach var="history" items="${sessionScope.operationHistory}">
-        <p>${history}</p>
+    <c:forEach var="value" items="${history}">
+        <p>${value}</p>
     </c:forEach>
 </table>
 <h3>${message}</h3>

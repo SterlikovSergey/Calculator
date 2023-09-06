@@ -41,13 +41,16 @@ public class RegistrationServlet extends HttpServlet {
         } else {
             userService.create(user);
             List<User> users = userService.getAllUsers();
-
-            req.getSession().setAttribute("currentUser", user);
-            req.getSession().setAttribute("allUsers", users.stream().distinct().collect(Collectors.toList()));
-            for (User user1 : users) {
-                System.out.println(user1);
+            Optional<User> validUserOp = userService.getByUserName(user.getUserName());
+            if (validUserOp.isPresent()) {
+                User validUser = validUserOp.get();
+                req.getSession().setAttribute("currentUser", validUser);
+                req.getSession().setAttribute("allUsers", users.stream().distinct().collect(Collectors.toList()));
+                for (User user1 : users) {
+                    System.out.println(user1);
+                }
+                resp.sendRedirect("/");
             }
-            resp.sendRedirect("/");
         }
     }
 }

@@ -24,8 +24,12 @@ public class UserService {
     public void create(User user) {
         jdbcUserStorage.save(user);
     }
+
     public Optional<User> getByUserName(String userName) {
         return jdbcUserStorage.findByUserName(userName);
     }
-    public List<User> getAllUsers(){return jdbcUserStorage.findAllUsers();}
+
+    public List<User> getAllUsers() {
+        return jdbcUserStorage.findAllUsers();
+    }
 }
