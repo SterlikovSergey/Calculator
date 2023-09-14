@@ -25,11 +25,6 @@ public class OperationService {
         Operation execute = operation.execute();
         jdbcOperationStorage.save(execute);
         return operation.execute();
-
-    }
-
-    public List<OperationHistory> getAllOperations() {
-        return jdbcOperationStorage.findAllOperations();
     }
 
     public List<OperationHistory> getAllOperationByUserName(User user) {

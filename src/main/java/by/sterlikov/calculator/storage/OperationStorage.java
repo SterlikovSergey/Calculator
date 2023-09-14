@@ -9,7 +9,6 @@ import java.util.List;
 public interface OperationStorage {
 
     void save(Operation operation) throws ClassNotFoundException;
-    List<OperationHistory> findAllOperations();
     List<OperationHistory> findAllOperationsByUserName(User user);
 
 }

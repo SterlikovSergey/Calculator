@@ -8,12 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.lang.System.out;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -46,8 +45,13 @@ public class RegistrationServlet extends HttpServlet {
                 User validUser = validUserOp.get();
                 req.getSession().setAttribute("currentUser", validUser);
                 req.getSession().setAttribute("allUsers", users.stream().distinct().collect(Collectors.toList()));
+                Map<String, String[]> getPar = req.getParameterMap();
+                for (Map.Entry<String,String[]> map:getPar.entrySet()){
+                    out.println(map.getKey());
+                    out.println(Arrays.toString(map.getValue()));
+                }
                 for (User user1 : users) {
-                    System.out.println(user1);
+                    out.println(user1);
                 }
                 resp.sendRedirect("/");
             }
